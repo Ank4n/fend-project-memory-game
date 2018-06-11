@@ -2,19 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Matching Game</title>
+    <title>Memory Game</title>
     <meta name="description" content="">
     <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Coda">
     <link rel="stylesheet" href="css/app.css">
-    <link rel="stylesheet" href="css/animate.css">
 </head>
 <body>
 
     <div class="container">
         <header>
-            <h1>Matching Game</h1>
-            <h1 id="timer">0.000</h1>
+            <h1>Memory Game</h1>
         </header>
 
         <section class="score-panel">
@@ -24,7 +22,9 @@
         		<li><i class="fa fa-star"></i></li>
         	</ul>
 
-        	<span class="moves">0</span> Moves
+            <div><span class="moves">0</span> Moves </div>
+
+            <div><span id="timer">0.000</span> sec</div>
 
             <div class="restart">
         		<i class="fa fa-repeat"></i>
@@ -33,6 +33,20 @@
 
         <ul class="deck" id="cards">
         </ul>
+    </div>
+
+    <!--End Game Summary-->
+    <div id="popup" class="popup zoomIn">
+        <div class="popup-content">
+            <span id="close-btn">&times;</span>
+            <h1>Congratulations!</h1>
+            <h3>You completed the game in <span id="time-summary">0</span> seconds.</h3>
+            <h3>Total moves: <span id="total-moves">0</span><span id="star-rating-text">&emsp; Star Rating: </span><span id="total-stars">0</span></h3>
+            <button type="button" class="button" id="replay-btn">
+                Play again!
+            </button>
+        </div>
+
     </div>
 
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>

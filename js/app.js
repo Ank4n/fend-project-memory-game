@@ -25,7 +25,8 @@ let firstCard,
     totalTime,
     moves,
     firstCardSelected,
-    matchCount;
+    matchCount,
+    starRating;
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -57,25 +58,31 @@ function updateScore() {
 
     let all_stars = $(".stars");
     if ((moves > 12) && (moves <= 16)) {
+        starRating = 2;
         all_stars.children().remove("li");
         all_stars.append("<li><i class='fa fa-star'></i></li><li><i class='fa fa-star'></i></li><li><i class='fa fa-star-o'></i></li>"); // Two stars
 
     } else if (moves > 17) {
+        starRating = 1;
         all_stars.children().remove("li");
         all_stars.append("<li><i class='fa fa-star'></i></li><li><i class='fa fa-star-o'></i></li><li><i class='fa fa-star-o'></i></li>"); // A star
     }
 }
 
+function replay() {
+    $("ul#cards").children().remove("li");
+    $(".stars").children().remove("li");
+    $(".stars").append("<li><i class='fa fa-star'></i></li><li><i class='fa fa-star'></i></li><li><i class='fa fa-star'></i></li>"); // RESET stars
+    $(".moves").text("0");
+    clearInterval(timerView);
+    $("#timer").text("0.000");
+    init();
+}
+
 // action when user clicks on replay button
 function setReplayAction() {
     $(".fa-repeat").click(function () {
-        $("ul#cards").children().remove("li");
-        $(".stars").children().remove("li");
-        $(".stars").append("<li><i class='fa fa-star'></i></li><li><i class='fa fa-star'></i></li><li><i class='fa fa-star'></i></li>"); // RESET stars
-        $(".moves").text("0");
-        clearInterval(timerView);
-        $("#timer").text("0.000");
-        init();
+        replay();
     });
 }
 
@@ -102,8 +109,25 @@ function gameOver() {
     clearInterval(timerView);
 
     setTimeout(function () {
-        alert("Congratulations! You've won the game!");
-    }, 500);
+        let popup = document.getElementById('popup');
+        let closeButton = document.getElementById("close-btn");
+
+        $("#total-moves").text(moves);
+        $("#total-stars").text(starRating);
+        $("#time-summary").text(totalTime);
+
+        popup.style.display = "block";
+
+        closeButton.onclick = function () {
+            popup.style.display = "none";
+        };
+
+        $("#replay-btn").on("click", function () {
+            popup.style.display = "none";
+            replay()
+        });
+    }, 1000);
+
 }
 
 function setTimer() {
@@ -127,6 +151,7 @@ function init() {
     moves = 0;
     firstCardSelected = false;
     matchCount = 0;
+    starRating = 3;
 
     cards = shuffle(cards);
     createDeckFrom(cards);
